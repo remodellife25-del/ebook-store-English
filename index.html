@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>রংধনু ই-বুক | আপনার ডিজিটাল বইয়ের দুনিয়া</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #f5576c;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6rem 5%;
+            text-align: center;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            animation: slideInDown 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: slideInUp 1s ease;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 1rem 3rem;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            animation: pulse 2s infinite;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+
+        /* Featured Books */
+        .featured {
+            padding: 4rem 5%;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(45deg, #f093fb, #f5576c);
+            border-radius: 2px;
+        }
+
+        .book-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .book-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            animation: fadeIn 0.5s ease;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .book-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 45px rgba(102, 126, 234, 0.3);
+        }
+
+        .book-image {
+            height: 250px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #f093fb 100%);
+            background-size: 200% 200%;
+            animation: gradient 5s ease infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .book-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .book-card:hover .book-image::before {
+            left: 100%;
+        }
+
+        .book-info {
+            padding: 2rem;
+        }
+
+        .book-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .book-author {
+            color: #7f8c8d;
+            margin-bottom: 0.5rem;
+            font-style: italic;
+        }
+
+        .book-price {
+            font-size: 1.5rem;
+            background: linear-gradient(45deg, #f093fb, #f5576c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .buy-button {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .buy-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .buy-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .buy-button:hover {
+            transform: scale(1.05);
+        }
+
+        /* Categories */
+        .categories {
+            padding: 4rem 5%;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e6e9f0 100%);
+        }
+
+        .category-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .category-item {
+            background: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            font-weight: 500;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .category-item:hover {
+            transform: scale(1.1) rotate(2deg);
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-color: transparent;
+        }
+
+        /* Newsletter */
+        .newsletter {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 5rem 5%;
+            text-align: center;
+            color: white;
+            clip-path: polygon(0 10%, 100% 0, 100% 90%, 0 100%);
+        }
+
+        .newsletter h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .newsletter p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+            gap: 1rem;
+            animation: slideInUp 1s ease;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .newsletter-input:focus {
+            outline: none;
+            box-shadow: 0 10px 30px rgba(240, 147, 251, 0.5);
+        }
+
+        .newsletter-button {
+            background: linear-gradient(45deg, #f093fb, #f5576c);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .newsletter-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #2c3e50, #1a1a2e);
+            color: white;
+            padding: 4rem 5% 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #f093fb, #f5576c, #667eea, #764ba2);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, #f093fb, #f5576c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-section p {
+            line-height: 1.8;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: white;
+            background: rgba(255,255,255,0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: linear-gradient(45deg, #f093fb, #f5576c);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 2.5rem;
+            border-radius: 20px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            animation: slideInUp 0.5s ease;
+        }
+
+        .modal-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .modal-content p {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .modal-close {
+            background: linear-gradient(45deg, #f093fb, #f5576c);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Animations */
+        @keyframes slideInDown {
+            from {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                transform: translateY(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .book-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="#" class="logo">রংধনু📚</a>
+        <div class="nav-links">
+            <a href="#home">হোম</a>
+            <a href="#featured">বই</a>
+            <a href="#categories">ক্যাটাগরি</a>
+            <a href="#contact">যোগাযোগ</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <h1>রঙিন ই-বুকের জগতে স্বাগতম</h1>
+        <p>আবিষ্কার করুন আপনার পছন্দের বই, রঙিন ডিজাইনে। পড়ার আনন্দ এখন আরও রঙিন।</p>
+        <a href="#featured" class="cta-button">বই দেখুন</a>
+    </section>
+
+    <!-- Featured Books -->
+    <section class="featured" id="featured">
+        <h2 class="section-title">বestseller বইসমূহ</h2>
+        <div class="book-grid" id="bookGrid">
+            <!-- Books will be added dynamically -->
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories" id="categories">
+        <h2 class="section-title">বইয়ের ক্যাটাগরি</h2>
+        <div class="category-container">
+            <div class="category-item" onclick="filterBooks('Fiction')">📚 কল্পকাহিনী</div>
+            <div class="category-item" onclick="filterBooks('Science')">🔬 বিজ্ঞান</div>
+            <div class="category-item" onclick="filterBooks('Technology')">💻 প্রযুক্তি</div>
+            <div class="category-item" onclick="filterBooks('Business')">📊 ব্যবসা</div>
+            <div class="category-item" onclick="filterBooks('Self Help')">🌟 আত্মউন্নয়ন</div>
+            <div class="category-item" onclick="filterBooks('All')">✨ সবগুলো</div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <h2>আপডেট পেতে সাবস্ক্রাইব করুন</h2>
+        <p>প্রতি সপ্তাহে নতুন বই ও অফার সম্পর্কে জানুন</p>
+        <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+            <input type="email" class="newsletter-input" placeholder="আপনার ইমেইল" required>
+            <button type="submit" class="newsletter-button">সাবস্ক্রাইব</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>রংধনু ই-বুক</h3>
+                <p>বই পড়ার আনন্দকে রঙিন করে তোলাই আমাদের লক্ষ্য। ডিজিটাল বাংলাদেশে বইপ্রেমীদের জন্য সেরা প্ল্যাটফর্ম।</p>
+                <div class="social-links">
+                    <a href="#">f</a>
+                    <a href="#">t</a>
+                    <a href="#">in</a>
+                    <a href="#">ig</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>দ্রুত লিংক</h3>
+                <p>👉 আমাদের সম্পর্কে</p>
+                <p>👉 প্রাইভেসি পলিসি</p>
+                <p>👉 টার্মস এন্ড কন্ডিশন</p>
+                <p>👉 রিফান্ড পলিসি</p>
+                <p>👉 সাহায্য কেন্দ্র</p>
+            </div>
+            <div class="footer-section">
+                <h3>যোগাযোগ</h3>
+                <p>📧 info@rangdhonu-ebook.com</p>
+                <p>📞 +৮৮০ ১৯XX-XXXXXX</p>
+                <p>🏢 ঢাকা, বাংলাদেশ</p>
+                <p>⏰ সকাল ৯টা - রাত ৮টা</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; ২০২৪ রংধনু ই-বুক - সকল অধিকার সংরক্ষিত</p>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <h3 id="modalTitle">সফল!</h3>
+            <p id="modalMessage">আপনার অনুরোধটি গ্রহণ করা হয়েছে।</p>
+            <button class="modal-close" onclick="closeModal()">ঠিক আছে</button>
+        </div>
+    </div>
+
+    <script>
+        // Book data
+        const books = [
+            {
+                id: 1,
+                title: "দ্য গ্রেট গ্যাটসবি",
+                author: "এফ. স্কট ফিট্জেরাল্ড",
+                price: ২৫০,
+                category: "Fiction",
+                cover: "📚"
+            },
+            {
+                id: 2,
+                title: "সাপিয়েন্স: মানব সভ্যতার ইতিহাস",
+                author: "ইউভাল নোয়াহ হারারি",
+                price: ৩৫০,
+                category: "Science",
+                cover: "🔬"
+            },
+            {
+                id: 3,
+                title: "ডিজিটাল ট্রান্সফরমেশন",
+                author: "ডেভিড রজার্স",
+                price: ৪০০,
+                category: "Technology",
+                cover: "💻"
+            },
+            {
+                id: 4,
+                title: "রিচ ড্যাড পুওর ড্যাড",
+                author: "রবার্ট কিয়োসাকি",
+                price: ৩০০,
+                category: "Business",
+                cover: "📊"
+            },
+            {
+                id: 5,
+                title: "দ্য পাওয়ার অফ হ্যাবিট",
+                author: "চার্লস ডুহিগ",
+                price: ২৮০,
+                category: "Self Help",
+                cover: "🌟"
+            },
+            {
+                id: 6,
+                title: "এ টেইল অফ টু সিটিজ",
+                author: "চার্লস ডিকেন্স",
+                price: ৩২০,
+                category: "Fiction",
+                cover: "📖"
+            },
+            {
+                id: 7,
+                title: "কসমস",
+                author: "কার্ল সেগান",
+                price: ৪৫০,
+                category: "Science",
+                cover: "🌌"
+            },
+            {
+                id: 8,
+                title: "দ্য ইনোভেটরস ডিলেমা",
+                author: "ক্লেটন ক্রিস্টেনসেন",
+                price: ৩৮০,
+                category: "Business",
+                cover: "📈"
+            }
+        ];
+
+        // Display books
+        function displayBooks(booksToShow) {
+            const bookGrid = document.getElementById('bookGrid');
+            bookGrid.innerHTML = '';
+
+            booksToShow.forEach(book => {
+                const bookCard = document.createElement('div');
+                bookCard.className = 'book-card';
+                bookCard.innerHTML = `
+                    <div class="book-image">${book.cover}</div>
+                    <div class="book-info">
+                        <h3 class="book-title">${book.title}</h3>
+                        <p class="book-author">${book.author}</p>
+                        <p class="book-price">টাকা ${book.price}</p>
+                        <button class="buy-button" onclick="buyBook('${book.title}', ${book.price})">এখনই কিনুন</button>
+                    </div>
+                `;
+                bookGrid.appendChild(bookCard);
+            });
+        }
+
+        // Buy book function
+        function buyBook(bookTitle, price) {
+            showModal('অর্ডার কনফার্মেশন', `"${bookTitle}" বইটি আপনার অর্ডার করা হয়েছে। মূল্য: টাকা ${price}\nডাউনলোড লিংক আপনার ইমেইলে পাঠানো হবে।`);
+        }
+
+        // Filter books by category
+        function filterBooks(category) {
+            if (category === 'All') {
+                displayBooks(books);
+                showModal('সব বই', 'সব ক্যাটাগরির বই দেখানো হচ্ছে');
+            } else {
+                const filteredBooks = books.filter(book => book.category === category);
+                displayBooks(filteredBooks);
+                showModal('ফিল্টার প্রয়োগ', `${category} ক্যাটাগরির ${filteredBooks.length} টি বই দেখানো হচ্ছে`);
+            }
+        }
+
+        // Newsletter subscription
+        function subscribeNewsletter(event) {
+            event.preventDefault();
+            const email = event.target.querySelector('input').value;
+            showModal('সাবস্ক্রিপশন সফল!', `${email} এই ইমেইলে আমাদের নিউজলেটার পাঠানো হবে। ধন্যবাদ!`);
+            event.target.reset();
+        }
+
+        // Modal functions
+        function showModal(title, message) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalMessage').textContent = message;
+            document.getElementById('successModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('successModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('successModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Initialize books
+        displayBooks(books);
+    </script>
+</body>
+</html>
